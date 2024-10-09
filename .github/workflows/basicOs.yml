@@ -16,6 +16,6 @@ jobs:
           
       - name: check out code
         uses: actions/checkout@v4
-      - name: print content
+      - name: print content of repo
         run: |
           ls
