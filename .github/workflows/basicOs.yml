@@ -13,3 +13,9 @@ jobs:
       - name: Print a greeting
         run: |
           echo "Hello There"
+          
+      - name: check out code
+        uses: actions/checkout@v4
+      - name: print content
+        run: |
+          ls
