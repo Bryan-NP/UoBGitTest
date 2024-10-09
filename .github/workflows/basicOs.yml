@@ -1,4 +1,5 @@
-name: MyWorkflow file
+name: MyWorkflow
+
 on:
   push:
     branches: [main]
@@ -9,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    #Step 1 Print a greeting message
-    - name: Print a greeting
-    run: |
-      echo "Hello There"
+      - name: Print a greeting
+        run: |
+          echo "Hello There"
