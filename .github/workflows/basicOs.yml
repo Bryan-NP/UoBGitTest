@@ -1,6 +1,7 @@
 name: MyWorkflow
 
 on:
+  pull_request:
   push:
     branches: [main]
 
@@ -13,45 +14,48 @@ jobs:
       - name: Print a greeting
         run: |
           echo "Hello There"
+          
       #This is where I checkout my code
-      - name: check out code
+      - name: Check out code
         uses: actions/checkout@v4
-      - name: print content of repo
+        
+      - name: Print content of repo
         run: |
           ls
 
-      #This is where I install python
+      #This is where I install Python
       - name: Installing Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-      - name: check version of python
+          
+      - name: Check Python version
         run: |
           python --version
       
-      #Installing dependencies if any
-      - name: install dependencies
+      # Installing dependencies if any
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt]; then pip install -r requirements.txt; fi
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           pip install pytest
-      # begin test
-      - name: begin test
+          
+      # Begin tests
+      - name: Begin test
         run: |
           pytest
-      #This is where we access the hidden repo
+          
+      # This is where we access the hidden repo
       - name: Checkout Hidden Repo
         uses: actions/checkout@v4
         with:
           repository: bryan-NP/UOBHidden
           path: hiddenfolder
           token: ${{ secrets.SECRETUOB }}
-
-      #This prints out the hidden files
-      - name: print out the hidden things
+          
+      # This prints out the hidden files
+      - name: Print out hidden things
         run: |
-          ls
+          ls -a
           cd hiddenfolder
-          ls
-          
-          
+          ls -a
