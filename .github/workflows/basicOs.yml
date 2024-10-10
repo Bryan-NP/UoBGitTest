@@ -15,7 +15,7 @@ jobs:
         run: |
           echo "Hello There"
           
-      #This is where I checkout my code
+      # This is where I checkout my code
       - name: Check out code
         uses: actions/checkout@v4
         
@@ -23,7 +23,7 @@ jobs:
         run: |
           ls
 
-      #This is where I install Python
+      # This is where I install Python
       - name: Installing Python
         uses: actions/setup-python@v5
         with:
@@ -59,3 +59,13 @@ jobs:
           ls -a
           cd hiddenfolder
           ls -a
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: discord
+        uses: sebastianpopp/discord-action@releases/v2
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          message: ${{ github.repository }} has been successfully deployed.
