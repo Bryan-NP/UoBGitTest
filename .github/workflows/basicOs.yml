@@ -45,7 +45,7 @@ jobs:
         run: |
           pytest
 
-      # Uncomment to access the hidden repo
+      # # This is where we access the hidden repo
       # - name: Checkout Hidden Repo
       #   uses: actions/checkout@v4
       #   with:
@@ -53,30 +53,23 @@ jobs:
       #     path: hiddenfolder
       #     token: ${{ secrets.SECRETUOB }}
 
-      # Uncomment to print out the hidden files
+      # # This prints out the hidden files
       # - name: Print out hidden things
       #   run: |
       #     ls -a
       #     cd hiddenfolder
       #     ls -a
 
-      # Send Discord "pending" notification before deployment
-      - name: Send Discord pending notification
+      # Send Discord notification
+      - name: Send Discord notification
         uses: sebastianpopp/discord-action@releases/v2
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          message: 🚧 Deployment is **pending** for repository: ${{ github.repository }}.
+          message: ${{ github.repository }} has been successfully deployed.
 
       # Deploy to GitHub Pages
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.INDEXTOKEN }}
-          publish_dir: ./ # Publish the root directory (where index.html is located)
-
-      # Send Discord "done" notification after deployment
-      - name: Send Discord done notification
-        uses: sebastianpopp/discord-action@releases/v2
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          message: ✅ Deployment for repository: ${{ github.repository }} has been **successfully deployed**.
+          publish_dir: ./ #Publish the root directory (where index.html is located)
