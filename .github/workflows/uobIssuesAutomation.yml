@@ -11,37 +11,37 @@ jobs:
 
     steps:
       - name: Print a greeting
-        run: |
-          echo "Hello There"
-      #This is where I checkout my code
-      - name: check out code
-        uses: actions/checkout@v4
-      - name: print content of repo
-        run: |
-          ls
+        run: echo "Hello There"
 
-      #This is where I install python
+      # Checkout the main repository code
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Print content of repo
+        run: ls
+
+      # Install Python
       - name: Installing Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-      - name: check version of python
-        run: |
-          python --version
-      
-      #Installing dependencies if any
-      - name: install dependencies
+
+      - name: Check Python version
+        run: python --version
+
+      # Install dependencies
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt]; then pip install -r requirements.txt; fi
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           pip install pytest pytest-cov
-          
-      # begin test
-      - name: begin test
+
+      # Run tests
+      - name: Run tests and generate report
         run: |
-          pytest -v -cov --junitxml=report.xml
-          
-      #This is where we access the hidden repo
+          pytest -v --cov --junitxml=report.xml
+
+      # Checkout the hidden repo
       - name: Checkout Hidden Repo
         uses: actions/checkout@v4
         with:
@@ -49,11 +49,18 @@ jobs:
           path: hiddenfolder
           token: ${{ secrets.SECRETUOB }}
 
-      #This prints out the hidden files
-      - name: print out the hidden things
+      # Print hidden repo contents
+      - name: Print out the hidden things
         run: |
           ls
           cd hiddenfolder
           ls
-          
-          
+
+      # Publish test results
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: |
+            junit_files: "report.xml"
+        
