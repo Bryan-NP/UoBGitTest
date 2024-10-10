@@ -64,7 +64,7 @@ jobs:
         uses: sebastianpopp/discord-action@releases/v2
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          message: 🚧 Deployment is **pending** for repository: ${{ github.repository }}.
+          message: Deployment is **pending** for repository.
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
@@ -76,4 +76,4 @@ jobs:
         uses: sebastianpopp/discord-action@releases/v2
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          message: ✅ Deployment for repository: ${{ github.repository }} has been **successfully deployed**.
+          message: Deployment for repository has been **successfully deployed**.
