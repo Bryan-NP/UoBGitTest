@@ -64,7 +64,7 @@ jobs:
         uses: sebastianpopp/discord-action@releases/v2
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          message: Deployment is pending for repository.
+          message: Bryan-NP/UoBGitTest deployment is pending for repository.
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
@@ -76,4 +76,4 @@ jobs:
         uses: sebastianpopp/discord-action@releases/v2
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          message: Deployment for repository has been **successfully deployed**.
+          message: Bryan-NP/UoBGitTest deployment for repository has been successfully deployed.
