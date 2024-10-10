@@ -55,5 +55,71 @@ jobs:
           ls
           cd hiddenfolder
           ls
+      name: MySecondWorkflow
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  my-job:
+    name: SecondJob
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print a greeting
+        run: echo "Hello There"
+
+      # Checkout the main repository code
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Print content of repo
+        run: ls
+
+      # Install Python
+      - name: Installing Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Check Python version
+        run: python --version
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install pytest pytest-cov
+
+      # Run tests
+      - name: Run tests and generate report
+        run: |
+          pytest -v --cov --junitxml=report.xml
+
+      # Checkout the hidden repo
+      - name: Checkout Hidden Repo
+        uses: actions/checkout@v4
+        with:
+          repository: bryan-NP/UOBHidden
+          path: hiddenfolder
+          token: ${{ secrets.SECRETUOB }}
+
+      # Print hidden repo contents
+      - name: Print out the hidden things
+        run: |
+          ls
+          cd hiddenfolder
+          ls
+
+      # Publish test results
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: |
+            junit_files: "report.xml"
+        
           
           
